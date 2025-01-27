@@ -1,0 +1,54 @@
+type ActivityType {
+    id : ID
+    name : String
+}
+
+type Activity {
+    id: ID
+    name: String
+    activityType: ActivityType
+    distance: Int
+    duration: String
+    startedAt: String
+    endedAt: String
+}
+
+type User {
+    id: ID
+    name: String
+    email: String
+    password: String
+}
+
+type Query {
+    getActivityById(id: ID!): Activity
+    getActivityByUserId(userId: ID!): Activity
+    getALlActivity: [Activity]
+    getAllActivityType: [ActivityType]
+    getUserById(id: ID!): User
+}
+
+input ActivityTypeRequest {
+    name: String!
+}
+
+input ActivityRequest {
+    userId: ID!
+    name: String!,
+    activityTypeId: ID!,
+    distance: Int!,
+    duration: String!,
+    startedAt: String!,
+    endedAt: String!
+}
+
+type Mutation {
+    createActivity(
+        req: ActivityRequest!
+    ): Activity
+
+    createActivityType(
+        req: ActivityTypeRequest!
+    ): ActivityType
+}
+
