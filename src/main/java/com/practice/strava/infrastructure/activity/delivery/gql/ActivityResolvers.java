@@ -1,6 +1,5 @@
 package com.practice.strava.infrastructure.activity.delivery.gql;
 
-import com.practice.strava.common.responses.ApiResponse;
 import com.practice.strava.entity.ActivityType;
 import com.practice.strava.infrastructure.activity.dto.ActivityRequest;
 import com.practice.strava.infrastructure.activity.dto.ActivityResponse;
