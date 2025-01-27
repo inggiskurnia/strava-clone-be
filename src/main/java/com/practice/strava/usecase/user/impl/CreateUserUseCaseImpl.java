@@ -9,6 +9,8 @@ import com.practice.strava.usecase.user.CreateUserUseCase;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class CreateUserUseCaseImpl implements CreateUserUseCase {
 
@@ -17,9 +19,12 @@ public class CreateUserUseCaseImpl implements CreateUserUseCase {
 
     @Override
     public UserResponse createUser(UserRequest req) {
-        User user = userRepository.findByEmail(req.getEmail())
-                .orElseThrow(()-> new DuplicateUserExceptions("User with email "+ req.getEmail() + " alrady present"));
+        Optional<User> user = userRepository.findByEmail(req.getEmail());
 
+        if (user.isPresent()){
+            throw new DuplicateUserExceptions("User with email "+ req.getEmail() + " already present");
+        }
+        
         User newUser = userRepository.save(req.toEntity());
         return new UserResponse(newUser);
     }

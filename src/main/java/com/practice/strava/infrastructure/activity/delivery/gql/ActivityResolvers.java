@@ -1,6 +1,5 @@
 package com.practice.strava.infrastructure.activity.delivery.gql;
 
-import com.practice.strava.entity.ActivityType;
 import com.practice.strava.infrastructure.activity.dto.ActivityRequest;
 import com.practice.strava.infrastructure.activity.dto.ActivityResponse;
 import com.practice.strava.infrastructure.activity.dto.ActivityTypeRequest;
@@ -8,6 +7,7 @@ import com.practice.strava.infrastructure.activity.dto.ActivityTypeResponse;
 import com.practice.strava.usecase.activity.CreateActivityTypeUseCase;
 import com.practice.strava.usecase.activity.CreateActivityUseCase;
 import com.practice.strava.usecase.activity.GetActivityTypeUseCase;
+import com.practice.strava.usecase.activity.GetActivityUseCase;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.graphql.data.method.annotation.Argument;
 import org.springframework.graphql.data.method.annotation.MutationMapping;
@@ -27,8 +27,16 @@ public class ActivityResolvers {
     @Autowired
     GetActivityTypeUseCase getActivityTypeUseCase;
 
+    @Autowired
+    GetActivityUseCase getActivityUseCase;
+
+    @QueryMapping(value = "getActivityByUserId")
+    public List<ActivityResponse> getActivityByUserId(@Argument Long userId){
+        return getActivityUseCase.getActivityByUserId(userId);
+    }
+
     @QueryMapping(value = "getAllActivityType")
-    public List<ActivityType> getAllActivityType(){
+    public List<ActivityTypeResponse> getAllActivityType(){
         return getActivityTypeUseCase.getAllActivityType();
     }
 

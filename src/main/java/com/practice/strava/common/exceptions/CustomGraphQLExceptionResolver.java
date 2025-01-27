@@ -12,6 +12,14 @@ public class CustomGraphQLExceptionResolver extends DataFetcherExceptionResolver
     @Override
     protected GraphQLError resolveToSingleError(Throwable ex, DataFetchingEnvironment env) {
         return switch (ex) {
+            case ActivityTypeNotFoundException activityTypeNotFoundException -> GraphQLError.newError()
+                    .message(ex.getMessage())
+                    .extensions(Map.of(
+                            "code", "ACTIVITY_TYPE_NOT_FOUND",
+                            "details", "Activity type is invalid"
+                    ))
+                    .build();
+
             case UserNotFoundException userNotFoundException -> GraphQLError.newError()
                     .message(ex.getMessage())
                     .extensions(Map.of(
@@ -34,6 +42,7 @@ public class CustomGraphQLExceptionResolver extends DataFetcherExceptionResolver
                             "details", "Activity type already exists in the system."
                     ))
                     .build();
+
             default -> null;
         };
     }

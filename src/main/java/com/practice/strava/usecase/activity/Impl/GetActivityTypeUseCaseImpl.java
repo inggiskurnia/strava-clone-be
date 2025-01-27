@@ -1,6 +1,7 @@
 package com.practice.strava.usecase.activity.Impl;
 
 import com.practice.strava.entity.ActivityType;
+import com.practice.strava.infrastructure.activity.dto.ActivityTypeResponse;
 import com.practice.strava.infrastructure.activity.repository.ActivityTypeRepository;
 import com.practice.strava.usecase.activity.GetActivityTypeUseCase;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +16,7 @@ public class GetActivityTypeUseCaseImpl implements GetActivityTypeUseCase {
 
 
     @Override
-    public List<ActivityType> getAllActivityType() {
-        return activityTypeRepository.findAll();
+    public List<ActivityTypeResponse> getAllActivityType() {
+        return activityTypeRepository.findAll().stream().map(ActivityTypeResponse::new).toList();
     }
 }

@@ -21,11 +21,11 @@ type User {
 }
 
 type Query {
-    getActivityById(id: ID!): Activity
-    getActivityByUserId(userId: ID!): Activity
+    getActivityByUserId(userId: ID!): [Activity]
     getALlActivity: [Activity]
     getAllActivityType: [ActivityType]
-    getUserById(id: ID!): User
+    getAllUser: [User]
+    getUserById(userId: ID!): User
 }
 
 input ActivityTypeRequest {
@@ -42,6 +42,18 @@ input ActivityRequest {
     endedAt: String!
 }
 
+input UserRequest {
+    name: String!
+    email: String!
+    password: String!
+}
+
+type UserResponse {
+    id: ID
+    name: String
+    email: String
+}
+
 type Mutation {
     createActivity(
         req: ActivityRequest!
@@ -50,5 +62,9 @@ type Mutation {
     createActivityType(
         req: ActivityTypeRequest!
     ): ActivityType
+
+    createUser(
+        req: UserRequest!
+    ): UserResponse
 }
 
